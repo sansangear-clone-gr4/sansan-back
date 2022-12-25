@@ -1,10 +1,12 @@
 package com.clone.sansansgear.controller;
 
+import com.clone.sansansgear.dto.PostListResponseDto;
+import com.clone.sansansgear.dto.PostRequestDto;
 import com.clone.sansansgear.dto.ResponseDto;
 import com.clone.sansansgear.service.PostService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 
@@ -16,9 +18,24 @@ public class PostController {
 
     //상품등록
     @PostMapping("/posts")
-    public String uploadPost(@RequestPart(name = "file") MultipartFile file)throws IOException {
-        System.out.println("test" + file);
-        return postService.uploadPost(file);
+    public ResponseDto uploadPost(@ModelAttribute PostRequestDto postRequestDto)throws IOException {
+        return postService.uploadPost(postRequestDto);
     }
+    //메인페이지상품조회
+    @GetMapping("/postList")
+    public PostListResponseDto getPosts(){
+        return postService.getPosts();
+    }
+    //제품상세조회
+    @GetMapping("/postList/{postId}")
+    public ResponseEntity<?> getPost(@PathVariable Long postId){
+       return postService.getPost(postId);
+    }
+    //제품정보수정
 
+   //제품페이지삭제
+    @DeleteMapping("/delete")
+    public ResponseDto deletePost(@RequestParam String fileName){
+        return postService.deletePost(fileName);
+    }
 }

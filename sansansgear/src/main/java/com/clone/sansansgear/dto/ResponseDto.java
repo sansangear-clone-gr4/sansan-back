@@ -1,5 +1,8 @@
 package com.clone.sansansgear.dto;
 
+import lombok.Getter;
+
+@Getter
 public class ResponseDto {
     private String msg;
     private int statusCode;

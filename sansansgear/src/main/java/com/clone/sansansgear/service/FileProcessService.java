@@ -31,9 +31,6 @@ public class FileProcessService {
         return UUID.randomUUID().toString().concat(getFileExtension(originalFilename));
     }
 
-    public void deleteFile(String fileName) {
-        amazonS3Service.deleteFile(fileName);
-    }
     //파일 확장자명 겟
     private String getFileExtension(String fileName) {
         try{
@@ -41,6 +38,10 @@ public class FileProcessService {
         }catch(StringIndexOutOfBoundsException e){
             throw new IllegalArgumentException(String.format("잘못된 형식의 파일 (%s)입니다.",fileName));
         }
+    }
+
+    public void deleteFile(String url) {
+        amazonS3Service.deleteFile(url);
     }
 
 
