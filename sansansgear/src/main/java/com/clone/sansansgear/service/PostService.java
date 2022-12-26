@@ -34,6 +34,7 @@ public class PostService {
 
     @Transactional
     //메인페이지상품조회
+    @Transactional(readOnly = true)
     public PostListResponseDto getPosts() {
         PostListResponseDto postListResponseDto = new PostListResponseDto();
         List<Post> postList = postRepository.findAllByOrderByCreatedAtDesc();
@@ -45,7 +46,7 @@ public class PostService {
 
 
 
-    @Transactional
+    @Transactional(readOnly = true)
     public ResponseEntity<?> getPost(Long id) {
         if (!postRepository.existsById(id)) {
             return ResponseEntity.ok(new ResponseDto("존재하지 않는 상품입니다.", HttpStatus.BAD_REQUEST.value()));
@@ -69,7 +70,7 @@ public class PostService {
         post.updatePost(postRequestDto, imageUrl);
         return ResponseEntity.ok(new PostResponseDto(post));
     }
-    @Transactional(readOnly = true)
+    @Transactional
     public ResponseDto deletePost(Long id) {
         if (!postRepository.existsById(id)){
             return new ResponseDto("존재하지 않는 상품입니다.",HttpStatus.BAD_REQUEST.value());
@@ -83,5 +84,35 @@ public class PostService {
             return new ResponseDto("상품삭제완료", 200);
         }
 
+    }
+
+    public ResponseEntity<?> showCategory() {
+        CategoryResponseDto categoryResponseDto = new CategoryResponseDto();
+        List <Post> outerList = postRepository.findByCategoryOrderByCreatedAtDesc("Outer");
+        List <Post> topList = postRepository.findByCategoryOrderByCreatedAtDesc("Top");
+        List <Post> bottomList = postRepository.findByCategoryOrderByCreatedAtDesc("Bottom");
+        List <Post> accessoriesList = postRepository.findByCategoryOrderByCreatedAtDesc("Accessories");
+        for(Post post : outerList){
+            categoryResponseDto.addOuter(new PostResponseDto(post));
+        }
+        for(Post post : topList){
+            categoryResponseDto.addTop(new PostResponseDto(post));
+        }
+        for(Post post : bottomList){
+            categoryResponseDto.addBottom(new PostResponseDto(post));
+        }
+        for(Post post : accessoriesList){
+            categoryResponseDto.addAccessories(new PostResponseDto(post));
+        }
+        return ResponseEntity.ok(categoryResponseDto);
+    }
+
+    public CateResponseDto showCate(String category) {
+        CateResponseDto cateResponseDto = new CateResponseDto();
+        List <Post> cateList = postRepository.findByCategoryOrderByCreatedAtDesc(category);
+        for(Post post : cateList){
+            cateResponseDto.addList(new PostResponseDto(post));
+        }
+        return cateResponseDto;
     }
 }
