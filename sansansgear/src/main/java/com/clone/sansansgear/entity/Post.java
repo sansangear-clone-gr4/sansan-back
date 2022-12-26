@@ -21,6 +21,9 @@ public class Post {
     private String content;
 
     @Column
+    private String userId;
+
+    @Column
     private String url;
 
     @Column
@@ -33,4 +36,5 @@ public class Post {
     private List<Bucket> bucketList = new ArrayList<>();
 
 
+//    public String getUserId() { return this.userId; }
 }
