@@ -29,13 +29,20 @@ public class PostController {
     //제품상세조회
     @GetMapping("/postList/{postId}")
     public ResponseEntity<?> getPost(@PathVariable Long postId){
-       return postService.getPost(postId);
+
+        return postService.getPost(postId);
     }
     //제품정보수정
+    @PutMapping("/postList/{postId}")
+    public ResponseEntity<?> updatePost(@PathVariable Long postId, @ModelAttribute PostRequestDto postRequestDto){
+        return postService.updatePost(postId,postRequestDto);
+    }
 
    //제품페이지삭제
-    @DeleteMapping("/delete")
-    public ResponseDto deletePost(@RequestParam String fileName){
-        return postService.deletePost(fileName);
+    @DeleteMapping("/postList/{postId}")
+    public ResponseDto deletePost(@PathVariable Long postId){
+
+        return postService.deletePost(postId);
     }
+    
 }

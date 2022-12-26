@@ -11,7 +11,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
@@ -22,38 +21,68 @@ import java.util.List;
 public class PostService {
     private final PostRepository postRepository;
     private final FileProcessService fileProcessService;
+
     //제품등록
     @Transactional
     public ResponseDto uploadPost(PostRequestDto postRequestDto) throws IOException {
-        String imageUrl= null;
+        String imageUrl = null;
 
-        if(!postRequestDto.getFile().isEmpty()){
+        if (!postRequestDto.getFile().isEmpty()) {
             imageUrl = fileProcessService.uploadFile(postRequestDto.getFile());
         }
-        Post post = postRepository.saveAndFlush(new Post(postRequestDto,  imageUrl));
-        return  new ResponseDto("제품 등록 성공", 200);
+        Post post = postRepository.saveAndFlush(new Post(postRequestDto, imageUrl));
+        return new ResponseDto("제품 등록 성공", 200);
     }
+
     //메인페이지상품조회
     public PostListResponseDto getPosts() {
         PostListResponseDto postListResponseDto = new PostListResponseDto();
         List<Post> postList = postRepository.findAllByOrderByCreatedAtDesc();
-        for(Post post : postList){
+        for (Post post : postList) {
             postListResponseDto.addPostList(new PostResponseDto(post));
         }
         return postListResponseDto;
     }
-   @Transactional(readOnly = true)
-    public ResponseDto deletePost(String fileName){
-        fileProcessService.deleteFile(fileName);
-        return  new ResponseDto("상품삭제완료", 200);
-   }
+
+
 
     @Transactional
     public ResponseEntity<?> getPost(Long id) {
-        if(!postRepository.existsById(id)){
+        if (!postRepository.existsById(id)) {
             return ResponseEntity.ok(new ResponseDto("존재하지 않는 상품입니다.", HttpStatus.BAD_REQUEST.value()));
         }
         Post post = postRepository.findById(id).orElseThrow();
         return ResponseEntity.ok(new DetailedPostResponseDto(post));
+    }
+
+    @Transactional
+    public ResponseEntity<?> updatePost(Long id, PostRequestDto postRequestDto) {
+        if (!postRepository.existsById(id)) {
+            return ResponseEntity.ok(new ResponseDto("존재하지 않는 상품입니다.", HttpStatus.BAD_REQUEST.value()));
+        }
+        Post post = postRepository.findById(id).orElseThrow();
+        String imageUrl = null;
+        if (!postRequestDto.getFile().isEmpty()) {
+            String fileName = post.getImageUrl().split(".com/")[1];
+            fileProcessService.deleteFile(fileName);
+            imageUrl = fileProcessService.uploadFile(postRequestDto.getFile());
+        }
+        post.updatePost(postRequestDto, imageUrl);
+        return ResponseEntity.ok(new PostResponseDto(post));
+    }
+    @Transactional(readOnly = true)
+    public ResponseDto deletePost(Long id) {
+        if (!postRepository.existsById(id)){
+            return new ResponseDto("존재하지 않는 상품입니다.",HttpStatus.BAD_REQUEST.value());
+        }else{
+           Post post = postRepository.findById(id).orElseThrow();
+           if(post.getImageUrl() != null){
+               String fileName = post.getImageUrl().split(".com/")[1];
+               fileProcessService.deleteFile(fileName);
+           }
+           postRepository.delete(post);
+            return new ResponseDto("상품삭제완료", 200);
+        }
+
     }
 }
