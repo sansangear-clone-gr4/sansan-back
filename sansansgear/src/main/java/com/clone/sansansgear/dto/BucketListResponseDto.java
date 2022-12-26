@@ -1,7 +1,8 @@
 package com.clone.sansansgear.dto;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class BucketListResponseDto {
-    private List<PostResponseDto> bucketList = new ArrayList<>();
+    private List<BucketResponseDto> bucketList = new ArrayList<>();
 }

@@ -9,6 +9,7 @@ import javax.persistence.*;
 public class Bucket {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @Column
     private Long productNum;
@@ -23,8 +24,5 @@ public class Bucket {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "post_id")
     private Post post;
-
-
-
 
 }
