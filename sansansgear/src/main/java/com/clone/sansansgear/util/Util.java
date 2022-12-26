@@ -46,7 +46,7 @@ public class Util {
 
     public static void checkPostUserIdByUser(User user, Post post) {
         if (user.getRole() == UserRoleEnum.USER) {
-            if (!post.getUserId().equals(user.getUserId())) {
+            if (!post.getUser().equals(user.getUserId())) {
                 throw new RestApiException(CommonErrorCode.INVALID_USER);
             }
         }

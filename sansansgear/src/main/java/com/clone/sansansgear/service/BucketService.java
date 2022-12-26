@@ -1,19 +1,19 @@
 package com.clone.sansansgear.service;
 
 import com.clone.sansansgear.dto.BucketListResponseDto;
+import com.clone.sansansgear.dto.BucketRequestDto;
+import com.clone.sansansgear.dto.BucketResponseDto;
+import com.clone.sansansgear.dto.ResponseDto;
 import com.clone.sansansgear.entity.Bucket;
 import com.clone.sansansgear.entity.Post;
 import com.clone.sansansgear.entity.User;
 import com.clone.sansansgear.repository.BucketRepository;
 import com.clone.sansansgear.repository.PostRepository;
-import com.clone.sansansgear.repository.UserRepository;
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.util.List;
 import java.util.Optional;
 
@@ -21,16 +21,49 @@ import java.util.Optional;
 @Service
 public class BucketService {
     private final PostRepository postRepository;
-    private final UserRepository userRepository;
     private final BucketRepository bucketRepository;
 
     private final Post post;
 
+    // 장바구니 가져오기
     @Transactional
     public ResponseEntity<?> getBucket(User user) {
-        Optional<BucketListResponseDto> bucket = bucketRepository.findByUserIdAndPostId(user, post);
+        BucketListResponseDto bucketListResponseDto = new BucketListResponseDto();
+        List<Bucket> bucketList = bucketRepository.findByUserIdAndPostId(user, post);
 
-        return bucket;
+        for(Bucket bucket : bucketList) {
+            bucketListResponseDto.addBucketList(new BucketResponseDto(bucket));
+        }
+
+        return ResponseEntity.ok(bucketListResponseDto);
+    }
+
+    // 장바구니 넣기
+    @Transactional
+    public ResponseEntity<?> putInBucket(Long postId, BucketRequestDto bucketRequestDto, User user) {
+        Bucket bucket = new Bucket(postId, bucketRequestDto, user);
+
+        bucketRepository.saveAndFlush(bucket);
+        return ResponseEntity.ok(new ResponseDto("장바구니 담기 완료", HttpStatus.OK.value()));
+    }
+
+    // 장바구니 수량 변경
+    @Transactional
+    public ResponseEntity<?> updateBucket(Long bucketId, BucketRequestDto bucketRequestDto, User user) {
+        Bucket bucket = bucketRepository.findByIdAndUser(bucketId, user);
+        bucket.updateBucket(bucketRequestDto);
+
+        return ResponseEntity.ok(new ResponseDto("장바구니 수량, 사이즈 변경 완료", HttpStatus.OK.value()));
+    }
+
+    // 장바구니 지우기
+    @Transactional
+    public ResponseEntity<?> deleteBucket(Long bucketId, User user) {
+        Bucket bucket = bucketRepository.findByIdAndUser(bucketId, user);
+
+        bucketRepository.delete(bucket);
+
+        return ResponseEntity.ok(new ResponseDto("삭제 완료", HttpStatus.OK.value()));
     }
 
 }

@@ -6,8 +6,8 @@ import com.clone.sansansgear.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface BucketRepository extends JpaRepository<Bucket, Long> {
-    Optional<Bucket> findByUserIdAndPostId(User user, Post post);
+    List<Bucket> findByUserIdAndPostId(User user, Post post);
+    Bucket findByIdAndUser(Long id, User user);
 }

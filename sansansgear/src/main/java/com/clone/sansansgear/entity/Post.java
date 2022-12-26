@@ -24,9 +24,6 @@ public class Post extends Timestamped{
     @Column(nullable = false)
     private String content;
 
-    @Column
-    private String userId;
-
     @Column(nullable = false)
     private String imageUrl;
 

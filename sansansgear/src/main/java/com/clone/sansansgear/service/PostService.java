@@ -1,7 +1,5 @@
 package com.clone.sansansgear.service;
 
-
-
 import com.clone.sansansgear.dto.*;
 import com.clone.sansansgear.entity.Post;
 import com.clone.sansansgear.repository.PostRepository;
@@ -34,6 +32,7 @@ public class PostService {
         return new ResponseDto("제품 등록 성공", 200);
     }
 
+    @Transactional
     //메인페이지상품조회
     public PostListResponseDto getPosts() {
         PostListResponseDto postListResponseDto = new PostListResponseDto();
