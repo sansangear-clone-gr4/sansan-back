@@ -24,9 +24,11 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-web'
+
     //@Value
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-validation'
     implementation 'mysql:mysql-connector-java'
+
     // 스프링 시큐리티
     implementation 'org.springframework.boot:spring-boot-starter-security'
     compileOnly 'org.projectlombok:lombok'
@@ -39,11 +41,16 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
-//    implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE'
+    implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE'
     implementation 'io.springfox:springfox-boot-starter:3.0.0'
+//    testImplementation 'org.springframework.security:spring-security-test'
+
+    runtimeOnly 'com.mysql:mysql-connector-j'
+
 
 }
 
 tasks.named('test') {
     useJUnitPlatform()
+    systemProperty "jasypt.encryptor.password", System.getProperties().get("jasypt.encryptor.password")
 }

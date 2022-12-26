@@ -88,7 +88,4 @@ public class UserService {
         response.addHeader(JwtUtil.AUTHORIZATION_HEADER, jwtUtil.createToken(user.getUserId(), user.getRole())); // getRole();
         return CompleteResponseDto.success("로그인 성공");
     }
-
-
-
 }

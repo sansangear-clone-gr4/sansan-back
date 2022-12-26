@@ -7,12 +7,11 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@Entity(name = "users")
+@Entity
 @Getter
 @NoArgsConstructor
+@Table(name = "USERS")
 public class User {
-
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -62,8 +61,6 @@ public class User {
 
 
     // 영문 대소문자, 숫자, 특수문자 다 포함해줄 것
-
-
 
 //    @Column
 

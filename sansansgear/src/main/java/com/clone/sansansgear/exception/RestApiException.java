@@ -19,4 +19,5 @@ public class RestApiException extends RuntimeException{
     public RestApiException(ErrorCode errorCode){
         this.errorCode = errorCode;
     }
+
 }
