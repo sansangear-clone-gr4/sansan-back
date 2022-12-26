@@ -5,7 +5,6 @@ import com.clone.sansansgear.Repository.UserRepository;
 import com.clone.sansansgear.dto.KakaoUserInfoDto;
 import com.clone.sansansgear.entity.User;
 import com.clone.sansansgear.entity.UserRoleEnum;
-import com.clone.sansansgear.jwt.JwtUtil;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -31,9 +30,8 @@ public class KakaoService {
 
     private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
-    private final JwtUtil jwtUtil;
 
-    public String kakaoLogin(String code, HttpServletResponse response) throws JsonProcessingException{
+    public ResponseEntity<?> kakaoLogin(String code, HttpServletResponse response) throws JsonProcessingException{
         String accessToken = getToken(code);
 
         KakaoUserInfoDto kakaoUserInfo = getKakaoUserInfo(accessToken);
@@ -41,7 +39,7 @@ public class KakaoService {
         User kakaoUser = registerKakaoUserIfNeeded(kakaoUserInfo);
 
         String createToken = jwtUtil.createToken(kakaoUser.getUsername(),kakaoUser.getRole());
-        return createToken;
+        return  ;
     }
 
 //<helf = "https://kauth.kakao.com/oauth/authorize?client_id=a40080563f3a1a6cababbd44cb6aeb5f&redirect_uri={http://localhost:8080/api/user/kakao/callback//업로드 한 서버로 변경 카카토톡도 변경해야함}&response_type=code">

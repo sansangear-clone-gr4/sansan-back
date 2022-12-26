@@ -4,6 +4,7 @@ import com.clone.sansansgear.jwt.JwtUtil;
 import com.clone.sansansgear.service.KakaoService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -19,7 +20,7 @@ public class UserController {
 
 
     @GetMapping("/kakao/callback")
-    public String kakaoLogin(@RequestParam String code, HttpServletResponse response) throws JsonProcessingException {
+    public ResponseEntity<?> kakaoLogin(@RequestParam String code, HttpServletResponse response) throws JsonProcessingException {
         // code: 카카오 서버로부터 받은 인가 코드
         String createToken = kakaoService.kakaoLogin(code, response);
 
@@ -28,7 +29,7 @@ public class UserController {
         cookie.setPath("/");
         response.addCookie(cookie);
 
-        return "redirect:/api/shop";
+        return ;
     }
 
 
