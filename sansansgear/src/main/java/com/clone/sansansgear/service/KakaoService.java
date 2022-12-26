@@ -42,7 +42,7 @@ public class KakaoService {
         return  ;
     }
 
-//<helf = "https://kauth.kakao.com/oauth/authorize?client_id=a40080563f3a1a6cababbd44cb6aeb5f&redirect_uri={http://localhost:8080/api/user/kakao/callback//업로드 한 서버로 변경 카카토톡도 변경해야함}&response_type=code">
+//<helf = "https://kauth.kakao.com/oauth/authorize?client_id=a40080563f3a1a6cababbd44cb6aeb5f&redirect_uri=http://localhost:8080/api/user/kakao/callback//&response_type=code">
 // 1. "인가 코드"로 "액세스 토큰" 요청
     private String getToken(String code) throws JsonProcessingException {
         // HTTP Header 생성
