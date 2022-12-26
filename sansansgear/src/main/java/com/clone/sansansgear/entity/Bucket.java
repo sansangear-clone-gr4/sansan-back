@@ -7,8 +7,6 @@ import javax.persistence.*;
 @Entity
 @Getter
 public class Bucket {
-
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 
@@ -25,6 +23,8 @@ public class Bucket {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "post_id")
     private Post post;
+
+
 
 
 }
