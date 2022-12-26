@@ -41,8 +41,7 @@ public class UserService {
     @Value("${admin.token}")
     private String ADMIN_TOKEN;
 
-    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, JwtUtil jwtUtil
-            , PostRepository postRepository) {
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, JwtUtil jwtUtil, PostRepository postRepository) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.jwtUtil = jwtUtil;

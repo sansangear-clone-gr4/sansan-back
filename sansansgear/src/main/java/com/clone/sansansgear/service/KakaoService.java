@@ -1,7 +1,10 @@
 package com.clone.sansansgear.service;
 
 
-import com.clone.sansansgear.Repository.UserRepository;
+import com.clone.sansansgear.dto.CompleteResponseDto;
+
+import com.clone.sansansgear.jwt.JwtUtil;
+import com.clone.sansansgear.repository.UserRepository;
 import com.clone.sansansgear.dto.KakaoUserInfoDto;
 import com.clone.sansansgear.entity.User;
 import com.clone.sansansgear.entity.UserRoleEnum;
@@ -10,10 +13,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
@@ -31,7 +31,10 @@ public class KakaoService {
     private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
 
-    public ResponseEntity<?> kakaoLogin(String code, HttpServletResponse response) throws JsonProcessingException{
+    private final JwtUtil jwtUtil;
+
+
+    public CompleteResponseDto kakaoLogin(String code, HttpServletResponse response) throws JsonProcessingException{
         String accessToken = getToken(code);
 
         KakaoUserInfoDto kakaoUserInfo = getKakaoUserInfo(accessToken);
@@ -39,7 +42,9 @@ public class KakaoService {
         User kakaoUser = registerKakaoUserIfNeeded(kakaoUserInfo);
 
         String createToken = jwtUtil.createToken(kakaoUser.getUsername(),kakaoUser.getRole());
-        return  ;
+
+//        response.addHeader(JwtUtil.AUTHORIZATION_HEADER, jwtUtil.createToken(user.getUserId(), user.getRole()));
+        return CompleteResponseDto.success("회원가입 성공");
     }
 
 //<helf = "https://kauth.kakao.com/oauth/authorize?client_id=a40080563f3a1a6cababbd44cb6aeb5f&redirect_uri=http://localhost:8080/api/user/kakao/callback//&response_type=code">
@@ -95,7 +100,7 @@ public class KakaoService {
         ObjectMapper objectMapper = new ObjectMapper();
         JsonNode jsonNode = objectMapper.readTree(responseBody);
         Long id = jsonNode.get("id").asLong();
-        String nickname = jsonNode.get("properties")
+        String nickname = jsoanNode.get("properties")
                 .get("nickname").asText();
         String email = jsonNode.get("kakao_account")
                 .get("email").asText();
@@ -105,6 +110,9 @@ public class KakaoService {
     }
     // 3. 필요시에 회원가입
     private User registerKakaoUserIfNeeded(KakaoUserInfoDto kakaoUserInfo) {
+        //        = id;
+        //        = nicknmae;
+        //        = email;
         // DB 에 중복된 Kakao Id 가 있는지 확인
         Long kakaoId = kakaoUserInfo.getId();
         User kakaoUser = userRepository.findByKakaoId(kakaoId)
@@ -112,7 +120,7 @@ public class KakaoService {
         if (kakaoUser == null) {
             // 카카오 사용자 email 동일한 email 가진 회원이 있는지 확인
             String kakaoEmail = kakaoUserInfo.getEmail();
-            User sameEmailUser = userRepository.findByEmail(kakaoEmail).orElse(null);
+            User sameEmailUser = userRepository.findByUserId(kakaoEmail).orElse(null);
             if (sameEmailUser != null) {
                 kakaoUser = sameEmailUser;
                 // 기존 회원정보에 카카오 Id 추가

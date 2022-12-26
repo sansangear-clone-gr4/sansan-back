@@ -1,16 +1,15 @@
-
 package com.clone.sansansgear.controller;
+
 
 import com.clone.sansansgear.dto.CompleteResponseDto;
 import com.clone.sansansgear.dto.LoginRequestDto;
 import com.clone.sansansgear.dto.SignupRequestDto;
 import com.clone.sansansgear.repository.UserRepository;
+import com.clone.sansansgear.service.KakaoService;
 import com.clone.sansansgear.service.UserService;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
