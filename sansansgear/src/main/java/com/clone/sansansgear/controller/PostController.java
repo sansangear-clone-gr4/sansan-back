@@ -44,5 +44,9 @@ public class PostController {
 
         return postService.deletePost(postId);
     }
-    
+    //카테고리별조회
+    @GetMapping("/api/postList/categories")
+    public ResponseEntity<?> showCategory(){
+        return postService.showCategory();
+    }
 }
