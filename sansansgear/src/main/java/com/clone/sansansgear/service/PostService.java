@@ -107,4 +107,13 @@ public class PostService {
         }
         return ResponseEntity.ok(categoryResponseDto);
     }
+
+    public CateResponseDto showCate(String category) {
+        CateResponseDto cateResponseDto = new CateResponseDto();
+        List <Post> cateList = postRepository.findByCategoryOrderByCreatedAtDesc(category);
+        for(Post post : cateList){
+            cateResponseDto.addList(new PostResponseDto(post));
+        }
+        return cateResponseDto;
+    }
 }

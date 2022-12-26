@@ -1,5 +1,6 @@
 package com.clone.sansansgear.controller;
 
+import com.clone.sansansgear.dto.CateResponseDto;
 import com.clone.sansansgear.dto.PostListResponseDto;
 import com.clone.sansansgear.dto.PostRequestDto;
 import com.clone.sansansgear.dto.ResponseDto;
@@ -45,8 +46,8 @@ public class PostController {
         return postService.deletePost(postId);
     }
     //카테고리별조회
-    @GetMapping("/api/postList/categories")
-    public ResponseEntity<?> showCategory(){
-        return postService.showCategory();
+    @GetMapping("/postList/category")
+    public CateResponseDto showCategory(@RequestParam("category") String category){
+        return postService.showCate(category);
     }
 }
