@@ -2,6 +2,7 @@ package com.clone.sansansgear.config;
 
 
 import com.clone.sansansgear.handler.CustomAccessDeniedHandler;
+import com.clone.sansansgear.jwt.JwtAuthFilter;
 import com.clone.sansansgear.jwt.JwtUtil;
 import com.clone.sansansgear.security.CustomAuthenticationEntryPoint;
 import com.clone.sansansgear.security.CustomSecurityFilter;
@@ -68,7 +69,8 @@ public class WebSecurityConfig {
 //                .antMatchers("/js/**").permitAll()
 //                .antMatchers("/images/**").permitAll()
 //                .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()     // 위 web.ignoring 에서 해결
-                .anyRequest().authenticated();  // 이외에 모든 요청들은 인증 처리를 하겠다
+                .anyRequest().authenticated()  // 이외에 모든 요청들은 인증 처리를 하겠다
+                .and().addFilterBefore(new JwtAuthFilter(jwtUtil), UsernamePasswordAuthenticationFilter.class);
 
         // 로그인 사용 (formLogin) / 인증이 되지 않은 요청을 로그인 페이지로 보낼 때, 기존의 로그인 페이지가 아니라 커스터마이징한 로그인 페이지로 반환, 아래 URL 확인할 것
         http.formLogin().loginPage("/api/user/login").permitAll();

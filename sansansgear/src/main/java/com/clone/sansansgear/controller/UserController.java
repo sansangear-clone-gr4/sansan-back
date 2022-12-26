@@ -16,27 +16,22 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/user")
 @RequiredArgsConstructor
 public class UserController {
 
     private final UserService userService;
-
     private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
 
-    // ADMIN_TOKEN
-    private static final String ADMIN_TOKEN = "AAABnvxRVklrnYxKZ0aHgTBcXukeZygoC";
-
-
     @PostMapping ("/signup")
-    public CompleteResponseDto signup(@RequestBody @Valid SignupRequestDto signupRequestDto) {
+    public CompleteResponseDto signup(@RequestBody SignupRequestDto signupRequestDto) {
         return userService.signup(signupRequestDto);
     }
 
-    @ResponseBody
+
     @PostMapping("/login")
-    public CompleteResponseDto login(@RequestBody @Valid LoginRequestDto loginRequestDto, HttpServletResponse response) {
+    public CompleteResponseDto login(@RequestBody LoginRequestDto loginRequestDto, HttpServletResponse response) {
         return userService.login(loginRequestDto, response);
     }
 

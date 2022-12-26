@@ -32,7 +32,6 @@ public class PostService {
         return new ResponseDto("제품 등록 성공", 200);
     }
 
-    @Transactional
     //메인페이지상품조회
     @Transactional(readOnly = true)
     public PostListResponseDto getPosts() {

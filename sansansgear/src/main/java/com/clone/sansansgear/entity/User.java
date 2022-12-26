@@ -7,12 +7,11 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@Entity(name = "USERS")
+@Entity
 @Getter
 @NoArgsConstructor
+@Table(name = "USERS")
 public class User {
-
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
