@@ -7,10 +7,11 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@Entity
+@Entity(name = "users")
 @Getter
 @NoArgsConstructor
 public class User {
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,12 +25,15 @@ public class User {
     @Column
     private String password; //UUID로 랜덤하게 겹치지않게 넣어줌
 
+
     @Column
     private String username; // 닉네임 기입
 
-    @Column
+
+    @Column(nullable = false)
     @Enumerated(value = EnumType.STRING)
-    private UserRoleEnum role;  //권한 무조건 USER
+    private UserRoleEnum role;
+
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Bucket> bucketList = new ArrayList<>();
@@ -49,11 +53,26 @@ public class User {
 
 
     //    @Column
+    public User(String userId, String password, String username, UserRoleEnum role){
+        this.userId = userId;
+        this.password = password;
+        this.username = username;
+        this.role = role;
+    }
+
+
+
+    // 영문 대소문자, 숫자, 특수문자 다 포함해줄 것
+
+
+
+//    @Column
+
 //    private int phoneNumber;
 //
 //    @Column
 //    private String email;
 
 
-}
+
 
