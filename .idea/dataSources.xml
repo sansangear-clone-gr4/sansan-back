@@ -8,5 +8,12 @@
       <jdbc-url>jdbc:mysql://sansan-database.ctwedy4647ly.ap-northeast-2.rds.amazonaws.com:3306/sansanclone</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
+    <data-source source="LOCAL" name="sansanclone@sansan-database.ctwedy4647ly.ap-northeast-2.rds.amazonaws.com" uuid="fa49eac0-a756-4bfb-831c-ee538a9b1ebb">
+      <driver-ref>mysql.8</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mysql://sansan-database.ctwedy4647ly.ap-northeast-2.rds.amazonaws.com:3306/sansanclone</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
   </component>
 </project>
