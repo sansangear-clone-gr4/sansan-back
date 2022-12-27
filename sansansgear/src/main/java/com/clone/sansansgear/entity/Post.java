@@ -37,8 +37,8 @@ public class Post extends Timestamped{
     @JoinColumn(name = "user_id")
     private User user;
 
-    @OneToMany(mappedBy = "post", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Bucket> bucketList = new ArrayList<>();
+//    @OneToMany(mappedBy = "post", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+//    private List<Bucket> bucketList = new ArrayList<>();
 
    public Post(PostRequestDto postrequestDto, User user){
        this.title = postrequestDto.getTitle();
