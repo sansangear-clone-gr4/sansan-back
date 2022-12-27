@@ -62,6 +62,7 @@ public class WebSecurityConfig {
                 .antMatchers("/api/user/**").permitAll()
                 .antMatchers("/api/postList").permitAll()
                 .antMatchers("/api/postList/{postId}").permitAll()
+
 //                .antMatchers("/api/bucket").permitAll()  // 비어있는 장바구니를 확인 할 수도 있기 때문에 ----> "장바구니가 비어있습니다." 메시지
 //                .antMatchers("/h2-console/**").permitAll()
 //                .antMatchers("/css/**").permitAll()

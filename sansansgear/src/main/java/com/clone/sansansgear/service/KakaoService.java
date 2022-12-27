@@ -34,7 +34,7 @@ public class KakaoService {
     private final JwtUtil jwtUtil;
 
 
-    public CompleteResponseDto kakaoLogin(String code, HttpServletResponse response) throws JsonProcessingException{
+    public String kakaoLogin(String code, HttpServletResponse response) throws JsonProcessingException{
         String accessToken = getToken(code);
 
         KakaoUserInfoDto kakaoUserInfo = getKakaoUserInfo(accessToken);
@@ -44,10 +44,10 @@ public class KakaoService {
         String createToken = jwtUtil.createToken(kakaoUser.getUsername(),kakaoUser.getRole());
 
 //        response.addHeader(JwtUtil.AUTHORIZATION_HEADER, jwtUtil.createToken(user.getUserId(), user.getRole()));
-        return CompleteResponseDto.success("회원가입 성공");
+        return createToken;
     }
 
-//<helf = "https://kauth.kakao.com/oauth/authorize?client_id=a40080563f3a1a6cababbd44cb6aeb5f&redirect_uri=http://localhost:8080/api/user/kakao/callback//&response_type=code">
+   // https://kauth.kakao.com/oauth/authorize?client_id=a40080563f3a1a6cababbd44cb6aeb5f&redirect_uri=http://localhost:8080/api/user/kakao/callback&response_type=code
 // 1. "인가 코드"로 "액세스 토큰" 요청
     private String getToken(String code) throws JsonProcessingException {
         // HTTP Header 생성

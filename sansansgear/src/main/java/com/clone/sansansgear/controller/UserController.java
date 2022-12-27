@@ -4,8 +4,11 @@ package com.clone.sansansgear.controller;
 import com.clone.sansansgear.dto.CompleteResponseDto;
 import com.clone.sansansgear.dto.LoginRequestDto;
 import com.clone.sansansgear.dto.SignupRequestDto;
+import com.clone.sansansgear.jwt.JwtUtil;
 import com.clone.sansansgear.repository.UserRepository;
+import com.clone.sansansgear.service.KakaoService;
 import com.clone.sansansgear.service.UserService;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -14,6 +17,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
@@ -26,6 +30,7 @@ public class UserController {
     private final UserService userService;
     private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
+    private final KakaoService kakaoService;
 
     @PostMapping("/signup")
     public CompleteResponseDto signup(@RequestBody SignupRequestDto signupRequestDto) {
@@ -40,7 +45,15 @@ public class UserController {
         return userService.login(loginRequestDto, response);
     }
 
+    @GetMapping("/kakao/callback")
+    public CompleteResponseDto kakaoLogin(@RequestParam String code, HttpServletResponse response) throws JsonProcessingException {
+        // code: 카카오 서버로부터 받은 인가 코드
+        String createToken = kakaoService.kakaoLogin(code, response);
 
+
+
+        return CompleteResponseDto.success("로그인 성공");
+    }
 //    @PostMapping("/signup")
 //    public CompleteResponseDto signup(@RequestBody @Valid SignupRequestDto signupRequestDto){
 //        return userService.signup(signupRequestDto);
