@@ -35,8 +35,13 @@ public class UserController {
     @PostMapping("/login")
     public CompleteResponseDto login(@RequestBody LoginRequestDto loginRequestDto, HttpServletResponse response) {
 
-
         return userService.login(loginRequestDto, response);
+    }
+
+    // id 중복체크
+    @GetMapping("/idCheck/{userId}")
+    public CompleteResponseDto idCheck(@PathVariable String userId) {
+        return userService.idCheck(userId);
     }
 
 
