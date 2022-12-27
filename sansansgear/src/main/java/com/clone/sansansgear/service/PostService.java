@@ -1,7 +1,5 @@
 package com.clone.sansansgear.service;
 
-
-
 import com.clone.sansansgear.dto.*;
 import com.clone.sansansgear.entity.Post;
 import com.clone.sansansgear.repository.PostRepository;
