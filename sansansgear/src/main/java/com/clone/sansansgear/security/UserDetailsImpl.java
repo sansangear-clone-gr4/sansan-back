@@ -2,6 +2,7 @@ package com.clone.sansansgear.security;
 
 import com.clone.sansansgear.entity.User;
 import com.clone.sansansgear.entity.UserRoleEnum;
+import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -9,6 +10,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.ArrayList;
 import java.util.Collection;
 
+@Getter
 //인증이 완료된 사용자 추가 및 사용자의 권한 GrantedAuthority 로 추상화 및 반환, 사용자의 ID, PWD Getter
 public class UserDetailsImpl implements UserDetails {
 

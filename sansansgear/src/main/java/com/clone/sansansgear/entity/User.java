@@ -17,15 +17,15 @@ public class User {
     private Long id;
     private Long kakaoId; //(숫자일껍니다)
 
-    @Column
-    private String userId; //(email들어가야함)
 
-    @Column
-    private String password; //UUID로 랜덤하게 겹치지않게 넣어줌
+    @Column(nullable = false)
+    private String userId;
 
+    @Column(nullable = false)
+    private String password;
 
-    @Column
-    private String username; // 닉네임 기입
+    @Column(nullable = false)
+    private String username;
 
 
     @Column(nullable = false)

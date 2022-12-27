@@ -10,6 +10,7 @@ import com.clone.sansansgear.exception.RestApiException;
 import com.clone.sansansgear.jwt.JwtUtil;
 import com.clone.sansansgear.repository.PostRepository;
 import com.clone.sansansgear.repository.UserRepository;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -21,32 +22,28 @@ import javax.validation.Valid;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 @Slf4j
 public class UserService {
 
     static String msg;
     static int statusCode = 400;
-
-
-//    private final PostRepository postRepository;
-
     private final PasswordEncoder passwordEncoder;
-
     private final JwtUtil jwtUtil;
-
     private final UserRepository userRepository;
-    private final PostRepository postRepository;
-
 
     @Value("${admin.token}")
-    private String ADMIN_TOKEN;
+    private static String ADMIN_TOKEN;
 
-    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, JwtUtil jwtUtil, PostRepository postRepository) {
-        this.userRepository = userRepository;
-        this.passwordEncoder = passwordEncoder;
-        this.jwtUtil = jwtUtil;
-        this.postRepository = postRepository;
-    }
+
+//    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, JwtUtil jwtUtil
+//            , PostRepository postRepository) {
+//        this.userRepository = userRepository;
+//        this.passwordEncoder = passwordEncoder;
+//        this.jwtUtil = jwtUtil;
+//        this.postRepository = postRepository;
+//    }
+
 
     @Transactional
     public CompleteResponseDto signup(SignupRequestDto signupRequestDto) {
@@ -74,17 +71,20 @@ public class UserService {
 
     @Transactional (readOnly = true)
     public CompleteResponseDto login(LoginRequestDto loginRequestDto, HttpServletResponse response) {
-        String username = loginRequestDto.getUserId();
+        String userId = loginRequestDto.getUserId();
         String password = loginRequestDto.getPassword();
 
         // 사용자 확인
-        User user = userRepository.findByUserId(username).orElseThrow(
+        User user = userRepository.findByUserId(userId).orElseThrow(
                 () -> new RestApiException(UserErrorCode.NO_USER)
         );
+
         // 비밀번호 확인
         if (!passwordEncoder.matches(password, user.getPassword())) {
             throw new RestApiException(UserErrorCode.WRONG_PASSWORD);
         }
+
+        // 토큰 부여
         response.addHeader(JwtUtil.AUTHORIZATION_HEADER, jwtUtil.createToken(user.getUserId(), user.getRole())); // getRole();
         return CompleteResponseDto.success("로그인 성공");
     }

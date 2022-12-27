@@ -7,6 +7,7 @@ import com.clone.sansansgear.dto.SignupRequestDto;
 import com.clone.sansansgear.repository.UserRepository;
 import com.clone.sansansgear.service.UserService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
+@Slf4j
 @RestController
 @RequestMapping("/api/user")
 @RequiredArgsConstructor
@@ -25,7 +27,7 @@ public class UserController {
     private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
 
-    @PostMapping ("/signup")
+    @PostMapping("/signup")
     public CompleteResponseDto signup(@RequestBody SignupRequestDto signupRequestDto) {
         return userService.signup(signupRequestDto);
     }
@@ -33,9 +35,10 @@ public class UserController {
 
     @PostMapping("/login")
     public CompleteResponseDto login(@RequestBody LoginRequestDto loginRequestDto, HttpServletResponse response) {
+
+
         return userService.login(loginRequestDto, response);
     }
-
 
 
 //    @PostMapping("/signup")
