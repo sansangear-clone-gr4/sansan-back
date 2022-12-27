@@ -88,4 +88,14 @@ public class UserService {
         response.addHeader(JwtUtil.AUTHORIZATION_HEADER, jwtUtil.createToken(user.getUserId(), user.getRole())); // getRole();
         return CompleteResponseDto.success("로그인 성공");
     }
+
+    // id 중복체크
+    @Transactional
+    public CompleteResponseDto idCheck(String userId) {
+        Optional<User> found = userRepository.findByUserId(userId);
+        if (found.isPresent()) {
+            throw new RestApiException(UserErrorCode.OVERLAPPED_USERID);
+        }
+        return CompleteResponseDto.success("사용할 수 있는 아이디입니다.");
+    }   //수정해야함  중복은아닌데  정규식에 걸릴수있음
 }
