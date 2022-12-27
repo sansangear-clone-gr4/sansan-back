@@ -3,8 +3,11 @@ package com.clone.sansansgear.controller;
 import com.clone.sansansgear.dto.CompleteResponseDto;
 import com.clone.sansansgear.dto.LoginRequestDto;
 import com.clone.sansansgear.dto.SignupRequestDto;
+import com.clone.sansansgear.jwt.JwtUtil;
 import com.clone.sansansgear.repository.UserRepository;
+import com.clone.sansansgear.service.KakaoService;
 import com.clone.sansansgear.service.UserService;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -13,6 +16,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
@@ -26,7 +30,9 @@ public class UserController {
     private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
 
-    @PostMapping ("/signup")
+    private final KakaoService kakaoService;
+
+    @PostMapping("/signup")
     public CompleteResponseDto signup(@RequestBody SignupRequestDto signupRequestDto) {
         return userService.signup(signupRequestDto);
     }
@@ -72,10 +78,11 @@ public class UserController {
 //        return "redirect:/api/user/login-page";
 //    }
 
-    //접근 불가 페이지 + testController 로직 추가 필요
+        //접근 불가 페이지 + testController 로직 추가 필요
 //    @PostMapping("/forbidden")
 //    public ModelAndView forbidden() {
 //        return new ModelAndView("forbidden");
 //    }
 
+    }
 }
