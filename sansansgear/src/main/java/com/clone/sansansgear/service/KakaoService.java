@@ -34,6 +34,7 @@ public class KakaoService {
     private final JwtUtil jwtUtil;
 
 
+
     public String kakaoLogin(String code, HttpServletResponse response) throws JsonProcessingException{
         String accessToken = getToken(code);
 
@@ -43,7 +44,7 @@ public class KakaoService {
 
         String createToken = jwtUtil.createToken(kakaoUser.getUsername(),kakaoUser.getRole());
 
-//        response.addHeader(JwtUtil.AUTHORIZATION_HEADER, jwtUtil.createToken(user.getUserId(), user.getRole()));
+        //response.addHeader(JwtUtil.AUTHORIZATION_HEADER, jwtUtil.createToken(user.getUserId(), user.getRole()));
         return createToken;
     }
 
