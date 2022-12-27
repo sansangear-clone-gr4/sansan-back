@@ -100,7 +100,7 @@ public class KakaoService {
         ObjectMapper objectMapper = new ObjectMapper();
         JsonNode jsonNode = objectMapper.readTree(responseBody);
         Long id = jsonNode.get("id").asLong();
-        String nickname = jsoanNode.get("properties")
+        String nickname = jsonNode.get("properties")
                 .get("nickname").asText();
         String email = jsonNode.get("kakao_account")
                 .get("email").asText();
@@ -133,6 +133,7 @@ public class KakaoService {
 
                 // email: kakao email
                 String email = kakaoUserInfo.getEmail();
+
 
                 kakaoUser = new User(kakaoUserInfo.getNicknmae(), kakaoId, encodedPassword, email, UserRoleEnum.USER);
             }

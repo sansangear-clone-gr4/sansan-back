@@ -15,7 +15,7 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-//    private Long kakaoId; //(숫자일껍니다)
+    private Long kakaoId; //(숫자일껍니다)
 
     @Column
     private String userId; //(email들어가야함)
@@ -48,6 +48,7 @@ public class User {
 //        this.kakaoId = kakaoId;
 //        return this;
 //    }
+                                            //kakaoUserInfo.getNicknmae(), kakaoId, encodedPassword, email, UserRoleEnum.USER
 
 
     //    @Column
@@ -56,6 +57,19 @@ public class User {
         this.password = password;
         this.username = username;
         this.role = role;
+    }
+
+    public User(String nicknmae, Long kakaoId, String encodedPassword, String email, UserRoleEnum role) {
+        username = nicknmae;
+        this.kakaoId = kakaoId;
+        this.password = encodedPassword;
+        userId = email;
+        this.role = role;
+    }
+
+    public User kakaoIdUpdate(Long kakaoId) {
+        this.kakaoId = kakaoId;
+        return this;
     }
 }
 
