@@ -17,10 +17,12 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String userId) throws UsernameNotFoundException {
+        System.out.println("UserDetailsServiceImpl.loadUserByUsername : " + userId);
+
         User user = userRepository.findByUserId(userId)
                 .orElseThrow(() -> new UsernameNotFoundException("사용자를 찾을 수 없습니다."));
 
-        return new com.clone.sansansgear.security.UserDetailsImpl(user, user.getUserId(), user.getPassword(), user.getUsername());
+        return new UserDetailsImpl(user, user.getUserId(), user.getPassword(), user.getUsername());
     }
 
 

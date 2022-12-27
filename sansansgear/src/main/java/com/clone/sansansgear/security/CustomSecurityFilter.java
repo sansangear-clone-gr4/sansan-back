@@ -2,6 +2,7 @@ package com.clone.sansansgear.security;
 
 import com.clone.sansansgear.errorcode.UserErrorCode;
 import com.clone.sansansgear.exception.RestApiException;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
@@ -16,16 +17,17 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+@RequiredArgsConstructor
 public class CustomSecurityFilter extends OncePerRequestFilter {        //OncePerRequestFilter : 기존에 스프링이 가지고 있던 필터
 
     private final UserDetailsServiceImpl userDetailsService;
     private final PasswordEncoder passwordEncoder;
 
     //생성자
-    public CustomSecurityFilter(UserDetailsServiceImpl userDetailsService, PasswordEncoder passwordEncoder){
-        this.userDetailsService = userDetailsService;
-        this.passwordEncoder = passwordEncoder;
-    }
+//    public CustomSecurityFilter(UserDetailsServiceImpl userDetailsService, PasswordEncoder passwordEncoder){
+//        this.userDetailsService = userDetailsService;
+//        this.passwordEncoder = passwordEncoder;
+//    }
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
