@@ -35,6 +35,7 @@ public class UserService {
 
     private static final String ADMIN_TOKEN = "AAABnvxRVklrnYxKZ0aHgTBcXukeZygoC";
 
+
 //    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, JwtUtil jwtUtil
 //            , PostRepository postRepository) {
 //        this.userRepository = userRepository;
@@ -42,6 +43,7 @@ public class UserService {
 //        this.jwtUtil = jwtUtil;
 //        this.postRepository = postRepository;
 //    }
+
 
     @Transactional
     public CompleteResponseDto signup(SignupRequestDto signupRequestDto) {
