@@ -60,9 +60,10 @@ public class WebSecurityConfig {
 
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http.authorizeRequests()
+                .antMatchers(HttpMethod.GET,"/").permitAll()
                 .antMatchers("/api/user/**").permitAll()
-                .antMatchers("/api/postList").permitAll()
-                .antMatchers("/api/postList/{postId}").permitAll()
+                .antMatchers("/api/posts").permitAll()
+                .antMatchers("/api/posts/{postId}").permitAll()
                 .antMatchers(HttpMethod.GET, "/api/user/idCheck/**").permitAll()
                 .antMatchers(HttpMethod.GET, "/api/bucket").permitAll()
 
