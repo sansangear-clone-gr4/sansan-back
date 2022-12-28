@@ -48,7 +48,7 @@ public class KakaoService {
         return createToken;
     }
 
-   // https://kauth.kakao.com/oauth/authorize?client_id=a40080563f3a1a6cababbd44cb6aeb5f&redirect_uri=http://localhost:8080/api/user/kakao/callback&response_type=code
+   // https://kauth.kakao.com/oauth/authorize?client_id=a40080563f3a1a6cababbd44cb6aeb5f&redirect_uri=https://kiml2175-dk.shop/api/user/kakao/callback&response_type=code
 // 1. "인가 코드"로 "액세스 토큰" 요청
     private String getToken(String code) throws JsonProcessingException {
         // HTTP Header 생성
@@ -59,7 +59,7 @@ public class KakaoService {
         MultiValueMap<String, String> body = new LinkedMultiValueMap<>();
         body.add("grant_type", "authorization_code");
         body.add("client_id", "a40080563f3a1a6cababbd44cb6aeb5f");
-        body.add("redirect_uri", "http://localhost:8080/api/user/kakao/callback");
+        body.add("redirect_uri", "https://kiml2175-dk.shop/api/user/kakao/callback");
         body.add("code", code);
 
         // HTTP 요청 보내기

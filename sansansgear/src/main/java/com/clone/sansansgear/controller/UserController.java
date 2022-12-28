@@ -56,7 +56,7 @@ public class UserController {
         cookie.setPath("/");
         response.addCookie(cookie);
 
-        return CompleteResponseDto.success("회원가입 성공");
+        return CompleteResponseDto.success("로그인 성공");
 
 
 //    @PostMapping("/signup")
@@ -74,10 +74,10 @@ public class UserController {
 //        return "redirect:/api/user/login-page";
 //    }
 
-    //접근 불가 페이지 + testController 로직 추가 필요
+        //접근 불가 페이지 + testController 로직 추가 필요
 //    @PostMapping("/forbidden")
 //    public ModelAndView forbidden() {
 //        return new ModelAndView("forbidden");
 //    }
-
+    }
 }
