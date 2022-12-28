@@ -12,16 +12,16 @@ import org.springframework.web.multipart.MultipartFile;
 public class PostRequestDto {
     private String title;
     private String content;
-    private String imageUrl;
+    //private String imageUrl;
     private MultipartFile file;
     private Long price;
     private String category;
 
-    public PostRequestDto(String title, String content, Long price, String category, String imageUrl){
-        this.title = title;
-        this.content = content;
-        this.price = price;
-        this.category = category;
-        this.imageUrl = imageUrl;
-    }
+//    public PostRequestDto(String title, String content, Long price, String category, String imageUrl){
+//        this.title = title;
+//        this.content = content;
+//        this.price = price;
+//        this.category = category;
+//        this.imageUrl = imageUrl;
+//    }
 }
