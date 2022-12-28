@@ -14,9 +14,15 @@ public class CompleteResponseDto {
 
     private int statusCode;
 
+
     public static CompleteResponseDto success(String msg){
         return new CompleteResponseDto(msg, HttpStatus.OK.value());
 
     }
+
+//    public CompleteResponseDto(String msg, String role){
+//        return new CompleteResponseDto(msg, HttpStatus.OK.value(), role);
+//
+//    }
 
 }

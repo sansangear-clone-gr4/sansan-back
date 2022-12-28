@@ -1,5 +1,6 @@
 package com.clone.sansansgear.controller;
 
+import com.clone.sansansgear.dto.LoginCompleteResponseDto;
 import com.clone.sansansgear.dto.CompleteResponseDto;
 import com.clone.sansansgear.dto.LoginRequestDto;
 import com.clone.sansansgear.dto.SignupRequestDto;
@@ -7,14 +8,10 @@ import com.clone.sansansgear.repository.UserRepository;
 import com.clone.sansansgear.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
-import javax.validation.Valid;
 
 @Slf4j
 @RestController
@@ -33,7 +30,7 @@ public class UserController {
 
 
     @PostMapping("/login")
-    public CompleteResponseDto login(@RequestBody LoginRequestDto loginRequestDto, HttpServletResponse response) {
+    public LoginCompleteResponseDto login(@RequestBody LoginRequestDto loginRequestDto, HttpServletResponse response) {
 
         return userService.login(loginRequestDto, response);
     }

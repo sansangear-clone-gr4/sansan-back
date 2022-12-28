@@ -1,6 +1,7 @@
 package com.clone.sansansgear.service;
 
 import com.clone.sansansgear.dto.CompleteResponseDto;
+import com.clone.sansansgear.dto.LoginCompleteResponseDto;
 import com.clone.sansansgear.dto.LoginRequestDto;
 import com.clone.sansansgear.dto.SignupRequestDto;
 import com.clone.sansansgear.entity.User;
@@ -32,8 +33,7 @@ public class UserService {
     private final JwtUtil jwtUtil;
     private final UserRepository userRepository;
 
-    @Value("${admin.token}")
-    private static String ADMIN_TOKEN;
+    private static final String ADMIN_TOKEN = "AAABnvxRVklrnYxKZ0aHgTBcXukeZygoC";
 
 //    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, JwtUtil jwtUtil
 //            , PostRepository postRepository) {
@@ -54,6 +54,7 @@ public class UserService {
         if (found.isPresent()) {
             throw new RestApiException(UserErrorCode.OVERLAPPED_USERID);
         }
+
         UserRoleEnum role = UserRoleEnum.USER;
         if (signupRequestDto.isAdmin()) {
             if (!signupRequestDto.getAdminToken().equals(ADMIN_TOKEN)) {
@@ -61,6 +62,7 @@ public class UserService {
             }
             role = UserRoleEnum.ADMIN;
         }
+
         User user = new User(userId, password, username, role);
         userRepository.save(user);
         return CompleteResponseDto.success("회원가입 성공");
@@ -68,9 +70,10 @@ public class UserService {
 
 
     @Transactional (readOnly = true)
-    public CompleteResponseDto login(LoginRequestDto loginRequestDto, HttpServletResponse response) {
+    public LoginCompleteResponseDto login(LoginRequestDto loginRequestDto, HttpServletResponse response) {
         String userId = loginRequestDto.getUserId();
         String password = loginRequestDto.getPassword();
+        boolean role = false;
 
         // 사용자 확인
         User user = userRepository.findByUserId(userId).orElseThrow(
@@ -84,7 +87,12 @@ public class UserService {
 
         // 토큰 부여
         response.addHeader(JwtUtil.AUTHORIZATION_HEADER, jwtUtil.createToken(user.getUserId(), user.getRole())); // getRole();
-        return CompleteResponseDto.success("로그인 성공");
+
+        if (!(user.getRole() == UserRoleEnum.USER)) {
+            role = true;
+        }
+
+        return LoginCompleteResponseDto.success("로그인 성공", role);
     }
 
     // id 중복체크

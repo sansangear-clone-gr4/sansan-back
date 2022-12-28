@@ -31,9 +31,8 @@ public class BucketService {
     @Transactional
     public ResponseEntity<?> getBucket(User user) {
         BucketListResponseDto bucketListResponseDto = new BucketListResponseDto();
-        List<Bucket> bucketList = bucketRepository.findByUserId(user);
-        System.out.println(bucketList);
-        log.info("{}",bucketList);
+        List<Bucket> bucketList = bucketRepository.findByUser(user);
+//        log.info("{}",bucketList);
 
         for(Bucket bucket : bucketList) {
             bucketListResponseDto.addBucketList(new BucketResponseDto(bucket));
