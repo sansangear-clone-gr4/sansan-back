@@ -1,9 +1,11 @@
-package com.clone.sansansgear.handler;
+package com.clone.sansansgear.exception;
 
 import com.clone.sansansgear.dto.ErrorResponseDto;
 import com.clone.sansansgear.errorcode.CommonErrorCode;
 import com.clone.sansansgear.errorcode.ErrorCode;
 import com.clone.sansansgear.errorcode.UserErrorCode;
+
+
 import com.clone.sansansgear.exception.RestApiException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
@@ -17,11 +19,12 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 import javax.validation.ConstraintViolationException;
 
+
 @RestControllerAdvice
 @Slf4j
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
-    @ExceptionHandler (RestApiException.class)
+    @ExceptionHandler(RestApiException.class)
     public ResponseEntity<Object> handleCustomException(RestApiException e) {
         ErrorCode errorCode = e.getErrorCode();
         return handleExceptionInternal(errorCode);
@@ -43,8 +46,8 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         log.warn("handleMethodArgumentNotValid", e);
         String errorFieldName = e.getBindingResult().getFieldError().getField();
         ErrorCode errorCode = CommonErrorCode.INVALID_PARAMETER;
-        if(errorFieldName.equals("userid")){
-            errorCode = UserErrorCode.WRONG_USERID_PATTERN;
+        if(errorFieldName.equals("username")){
+            errorCode = UserErrorCode.WRONG_USERNAME_PATTERN;
         }else if(errorFieldName.equals("password")){
             errorCode = UserErrorCode.WRONG_PASSWORD_PATTERN;
         }
@@ -90,4 +93,5 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
                 .msg(message)
                 .build();
     }
+
 }

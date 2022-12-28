@@ -10,7 +10,8 @@ public enum UserErrorCode implements ErrorCode {
     NO_USER("회원을 찾을 수 없습니다.",HttpStatus.NOT_FOUND.value()),
     WRONG_ADMINTOKEN("관리자 암호가 틀려 등록이 불가능합니다.", HttpStatus.BAD_REQUEST.value()),
     OVERLAPPED_USERID("중복된 user id 입니다.", HttpStatus.BAD_REQUEST.value()),
-    INVALID_TOKEN("토큰이 유효하지 않습니다.", HttpStatus.BAD_REQUEST.value());
+    INVALID_TOKEN("토큰이 유효하지 않습니다.", HttpStatus.BAD_REQUEST.value()),
+    WRONG_USERNAME_PATTERN("유저 이름이 다릅니다 ", HttpStatus.BAD_REQUEST.value() );
 
     private final String msg;
     private final int statusCode;
