@@ -61,22 +61,9 @@ public class WebSecurityConfig {
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http.authorizeRequests()
                 .antMatchers("/api/user/**").permitAll()
-<<<<<<< HEAD
-<<<<<<< HEAD
                 .antMatchers("/api/posts").permitAll()
-<<<<<<< HEAD
-=======
                 .antMatchers("/api/posts/category").permitAll()
->>>>>>> dev
                 .antMatchers("/api/posts/{postId}").permitAll()
-=======
-                .antMatchers("/api/postList").permitAll()
-                .antMatchers("/api/postList/{postId}").permitAll()
->>>>>>> parent of 1f06e39 (test)
-=======
-                .antMatchers("/api/postList").permitAll()
-                .antMatchers("/api/postList/{postId}").permitAll()
->>>>>>> parent of 1f06e39 (test)
                 .antMatchers(HttpMethod.GET, "/api/user/idCheck/**").permitAll()
                 .antMatchers(HttpMethod.GET, "/api/bucket").permitAll()
 

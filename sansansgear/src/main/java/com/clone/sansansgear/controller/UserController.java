@@ -57,6 +57,7 @@ public class UserController {
         response.addCookie(cookie);
 
         return CompleteResponseDto.success("회원가입 성공");
+    }
 
 
 //    @PostMapping("/signup")

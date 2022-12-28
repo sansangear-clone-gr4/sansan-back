@@ -15,6 +15,7 @@ public class BucketResponseDto {
     private String imageFile;
     private Long productNum;
     private Long price;
+    private Long size;
 
     public BucketResponseDto(Bucket bucket) {
         this.id = bucket.getId();
@@ -22,6 +23,7 @@ public class BucketResponseDto {
         this.title = bucket.getPost().getTitle();
         this.imageFile = bucket.getPost().getImageUrl();
         this.productNum = bucket.getProductNum();
+        this.size = bucket.getSize();
         this.price = bucket.getPost().getPrice();
     }
 }
