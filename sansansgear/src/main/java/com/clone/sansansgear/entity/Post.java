@@ -40,23 +40,8 @@ public class Post extends Timestamped{
     @OneToMany(mappedBy = "post", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Bucket> bucketList = new ArrayList<>();
 
-   public Post(PostRequestDto postrequestDto, User user){
-       this.title = postrequestDto.getTitle();
-       this.content = postrequestDto.getContent();
-       this.imageUrl = postrequestDto.getImageUrl();
-       this.price = postrequestDto.getPrice();
-       this.category = postrequestDto.getCategory();
-       this.user = user;
-   }
 
-    public Post(PostRequestDto postRequestDto, User user, String imageUrl) {
-        this.title = postRequestDto.getTitle();
-        this.content = postRequestDto.getContent();
-        this.price = postRequestDto.getPrice();
-        this.category = postRequestDto.getCategory();
-        this.imageUrl = imageUrl;
-        this.user = user;
-    }
+
     public Post(PostRequestDto postRequestDto,  String imageUrl) {
         this.title = postRequestDto.getTitle();
         this.content = postRequestDto.getContent();
