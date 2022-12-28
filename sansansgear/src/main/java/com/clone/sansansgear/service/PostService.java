@@ -85,26 +85,7 @@ public class PostService {
 
     }
 
-    public ResponseEntity<?> showCategory() {
-        CategoryResponseDto categoryResponseDto = new CategoryResponseDto();
-        List <Post> outerList = postRepository.findByCategoryOrderByCreatedAtDesc("Outer");
-        List <Post> topList = postRepository.findByCategoryOrderByCreatedAtDesc("Top");
-        List <Post> bottomList = postRepository.findByCategoryOrderByCreatedAtDesc("Bottom");
-        List <Post> accessoriesList = postRepository.findByCategoryOrderByCreatedAtDesc("Accessories");
-        for(Post post : outerList){
-            categoryResponseDto.addOuter(new PostResponseDto(post));
-        }
-        for(Post post : topList){
-            categoryResponseDto.addTop(new PostResponseDto(post));
-        }
-        for(Post post : bottomList){
-            categoryResponseDto.addBottom(new PostResponseDto(post));
-        }
-        for(Post post : accessoriesList){
-            categoryResponseDto.addAccessories(new PostResponseDto(post));
-        }
-        return ResponseEntity.ok(categoryResponseDto);
-    }
+
 
     public CateResponseDto showCate(String category) {
         CateResponseDto cateResponseDto = new CateResponseDto();
