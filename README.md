@@ -18,7 +18,7 @@
 - [한예진FE](https://github.com/lidieee)
 
 ## 와이어프레임
-![MainPage.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/cbd45680-54ef-4bc5-89e2-2585a8ceca6c/MainPage.png)
+![image](https://user-images.githubusercontent.com/55370369/209972737-b32457bd-6c3e-4a74-9ae8-b3583d615360.png)
 ![Shop.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/bcfa32de-6d2a-4f36-9c5e-bfd2fc415528/Shop.png)
 ![Detail.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/9e59b1b3-c7da-4e0c-aa3e-0c41d8dd6936/Detail.png)
 ![Cart.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/cb098055-1294-4f31-8a30-f6044a3b91d9/Cart.png)
