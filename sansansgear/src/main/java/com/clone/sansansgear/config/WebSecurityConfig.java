@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -41,13 +42,13 @@ public class WebSecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
-    @Bean
-    public WebSecurityCustomizer webSecurityCustomizer() {  // 아래 SecurityFilterChain 우선적으로 거치는 곳
-        // h2-console 사용 및 resources 접근 허용 설정
-        return (web) -> web.ignoring()      // 아래 permitAll 설정되어 있는 것들의 인증 처리를 무시하고 허용
-                .requestMatchers(PathRequest.toH2Console())
-                .requestMatchers(PathRequest.toStaticResources().atCommonLocations());
-    }
+//    @Bean
+//    public WebSecurityCustomizer webSecurityCustomizer() {  // 아래 SecurityFilterChain 우선적으로 거치는 곳
+//        // h2-console 사용 및 resources 접근 허용 설정
+//        return (web) -> web.ignoring()      // 아래 permitAll 설정되어 있는 것들의 인증 처리를 무시하고 허용
+//                .requestMatchers(PathRequest.toH2Console())
+//                .requestMatchers(PathRequest.toStaticResources().atCommonLocations());
+//    }
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -60,8 +61,13 @@ public class WebSecurityConfig {
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http.authorizeRequests()
                 .antMatchers("/api/user/**").permitAll()
-                .antMatchers("/api/postList").permitAll()
-                .antMatchers("/api/postList/{postId}").permitAll()
+                .antMatchers("/api/posts").permitAll()
+                .antMatchers("/api/posts/category").permitAll()
+                .antMatchers("/api/posts/{postId}").permitAll()
+                .antMatchers(HttpMethod.GET, "/api/user/idCheck/**").permitAll()
+                .antMatchers(HttpMethod.GET, "/api/bucket").permitAll()
+                .antMatchers( HttpMethod.GET,"/api//kakao/callback").permitAll()
+
 //                .antMatchers("/api/bucket").permitAll()  // 비어있는 장바구니를 확인 할 수도 있기 때문에 ----> "장바구니가 비어있습니다." 메시지
 //                .antMatchers("/h2-console/**").permitAll()
 //                .antMatchers("/css/**").permitAll()
@@ -75,7 +81,7 @@ public class WebSecurityConfig {
 //        http.formLogin().loginPage("/api/user/login").permitAll();
 
         // Custom Filter 등록하기
-        http.addFilterBefore(new CustomSecurityFilter(userDetailsService, passwordEncoder()), UsernamePasswordAuthenticationFilter.class);
+//        http.addFilterBefore(new CustomSecurityFilter(userDetailsService, passwordEncoder()), UsernamePasswordAuthenticationFilter.class);
 
         //접근 제한 페이지 이동 설정
         // http.exceptionHandling().accessDeniedPage("/api/user/forbidden")
@@ -83,9 +89,9 @@ public class WebSecurityConfig {
         //                .cors();
 
         // 403 Error 처리, 인증과는 별개로 추가적인 권한이 충족되지 않는 경우
-        http.exceptionHandling().accessDeniedHandler(customAccessDeniedHandler)
-                .and()
-                .cors();
+//        http.exceptionHandling().accessDeniedHandler(customAccessDeniedHandler)
+//                .and()
+//                .cors();
 
 
         return http.build();

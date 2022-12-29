@@ -10,6 +10,7 @@ import com.clone.sansansgear.entity.User;
 import com.clone.sansansgear.repository.BucketRepository;
 import com.clone.sansansgear.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -19,6 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+@Slf4j
 @RequiredArgsConstructor
 @Service
 public class BucketService {
@@ -29,7 +31,8 @@ public class BucketService {
     @Transactional
     public ResponseEntity<?> getBucket(User user) {
         BucketListResponseDto bucketListResponseDto = new BucketListResponseDto();
-        List<Bucket> bucketList = bucketRepository.findByUserId(user);
+        List<Bucket> bucketList = bucketRepository.findByUser(user);
+//        log.info("{}",bucketList);
 
         for(Bucket bucket : bucketList) {
             bucketListResponseDto.addBucketList(new BucketResponseDto(bucket));
@@ -41,7 +44,8 @@ public class BucketService {
     // 장바구니 넣기
     @Transactional
     public ResponseEntity<?> putInBucket(Long postId, BucketRequestDto bucketRequestDto, User user) {
-        Bucket bucket = new Bucket(postId, bucketRequestDto, user);
+        Post post = postRepository.findById(postId).orElseThrow();
+        Bucket bucket = new Bucket(post, bucketRequestDto, user);
 
         bucketRepository.saveAndFlush(bucket);
         return ResponseEntity.ok(new ResponseDto("장바구니 담기 완료", HttpStatus.OK.value()));

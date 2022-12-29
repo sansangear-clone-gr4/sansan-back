@@ -34,10 +34,6 @@ public class CustomSecurityFilter extends OncePerRequestFilter {        //OncePe
         String userId = request.getParameter("userId");     // getParameter를 사용하며 client 쪽에서 넘어오는 parameter 값을 가지고 올 수 있음
         String password = request.getParameter("password");
 
-        System.out.println("userId = " + userId);
-        System.out.println("password = " + password);
-        System.out.println("request.getRequestURI() = " + request.getRequestURI());
-
 
         if(userId != null && password  != null && (request.getRequestURI().equals("/api/user/login") || request.getRequestURI().equals("/api/test-secured"))){
             UserDetails userDetails = userDetailsService.loadUserByUsername(userId); // db에서 username 확인해서 들고옴

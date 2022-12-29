@@ -2,6 +2,8 @@ package com.clone.sansansgear.service;
 
 import com.clone.sansansgear.dto.*;
 import com.clone.sansansgear.entity.Post;
+import com.clone.sansansgear.entity.User;
+import com.clone.sansansgear.entity.UserRoleEnum;
 import com.clone.sansansgear.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,14 +24,17 @@ public class PostService {
 
     //제품등록
     @Transactional
-    public ResponseDto uploadPost(PostRequestDto postRequestDto) throws IOException {
-        String imageUrl = null;
+    public ResponseDto uploadPost(PostRequestDto postRequestDto, User user) throws IOException {
+        if (user.getRole() == UserRoleEnum.ADMIN) {
+            String imageUrl = null;
 
-        if (!postRequestDto.getFile().isEmpty()) {
-            imageUrl = fileProcessService.uploadFile(postRequestDto.getFile());
+            if (!postRequestDto.getFile().isEmpty()) {
+                imageUrl = fileProcessService.uploadFile(postRequestDto.getFile());
+            }
+            Post post = postRepository.saveAndFlush(new Post(postRequestDto, imageUrl));
+            return new ResponseDto("제품 등록 성공", 200);
         }
-        Post post = postRepository.saveAndFlush(new Post(postRequestDto, imageUrl));
-        return new ResponseDto("제품 등록 성공", 200);
+        return new ResponseDto("관리자만 상품등록을 할 수 있습니다.", 400);
     }
 
     //메인페이지상품조회
@@ -55,56 +60,42 @@ public class PostService {
     }
 
     @Transactional
-    public ResponseEntity<?> updatePost(Long id, PostRequestDto postRequestDto) {
-        if (!postRepository.existsById(id)) {
-            return ResponseEntity.ok(new ResponseDto("존재하지 않는 상품입니다.", HttpStatus.BAD_REQUEST.value()));
+    public ResponseEntity<?> updatePost(Long id, PostRequestDto postRequestDto,User user) {
+        if (user.getRole() == UserRoleEnum.ADMIN) {
+            if (!postRepository.existsById(id)) {
+                return ResponseEntity.ok(new ResponseDto("존재하지 않는 상품입니다.", HttpStatus.BAD_REQUEST.value()));
+            }
+            Post post = postRepository.findById(id).orElseThrow();
+            String imageUrl = null;
+            if (!postRequestDto.getFile().isEmpty()) {
+                String fileName = post.getImageUrl().split(".com/")[1];
+                fileProcessService.deleteFile(fileName);
+                imageUrl = fileProcessService.uploadFile(postRequestDto.getFile());
+            }
+            post.updatePost(postRequestDto, imageUrl);
+            return ResponseEntity.ok(new PostResponseDto(post));
         }
-        Post post = postRepository.findById(id).orElseThrow();
-        String imageUrl = null;
-        if (!postRequestDto.getFile().isEmpty()) {
-            String fileName = post.getImageUrl().split(".com/")[1];
-            fileProcessService.deleteFile(fileName);
-            imageUrl = fileProcessService.uploadFile(postRequestDto.getFile());
-        }
-        post.updatePost(postRequestDto, imageUrl);
-        return ResponseEntity.ok(new PostResponseDto(post));
+        return ResponseEntity.ok( new ResponseDto("관리자만 상품수정을 할 수 있습니다.", 400));
     }
     @Transactional
-    public ResponseDto deletePost(Long id) {
-        if (!postRepository.existsById(id)){
-            return new ResponseDto("존재하지 않는 상품입니다.",HttpStatus.BAD_REQUEST.value());
-        }else{
-           Post post = postRepository.findById(id).orElseThrow();
-           if(post.getImageUrl() != null){
-               String fileName = post.getImageUrl().split(".com/")[1];
-               fileProcessService.deleteFile(fileName);
-           }
-           postRepository.delete(post);
-            return new ResponseDto("상품삭제완료", 200);
-        }
+    public ResponseDto deletePost(Long id,User user) {
+        if (user.getRole() == UserRoleEnum.ADMIN) {
+            if (!postRepository.existsById(id)) {
+                return new ResponseDto("존재하지 않는 상품입니다.", HttpStatus.BAD_REQUEST.value());
+            } else {
+                Post post = postRepository.findById(id).orElseThrow();
+                if (post.getImageUrl() != null) {
+                    String fileName = post.getImageUrl().split(".com/")[1];
+                    fileProcessService.deleteFile(fileName);
+                }
+                postRepository.delete(post);
+                return new ResponseDto("상품삭제완료", 200);
+            }
 
+        }
+        return new ResponseDto("관리자만 상품삭제를 할 수 있습니다.", 400);
     }
 
-    public ResponseEntity<?> showCategory() {
-        CategoryResponseDto categoryResponseDto = new CategoryResponseDto();
-        List <Post> outerList = postRepository.findByCategoryOrderByCreatedAtDesc("Outer");
-        List <Post> topList = postRepository.findByCategoryOrderByCreatedAtDesc("Top");
-        List <Post> bottomList = postRepository.findByCategoryOrderByCreatedAtDesc("Bottom");
-        List <Post> accessoriesList = postRepository.findByCategoryOrderByCreatedAtDesc("Accessories");
-        for(Post post : outerList){
-            categoryResponseDto.addOuter(new PostResponseDto(post));
-        }
-        for(Post post : topList){
-            categoryResponseDto.addTop(new PostResponseDto(post));
-        }
-        for(Post post : bottomList){
-            categoryResponseDto.addBottom(new PostResponseDto(post));
-        }
-        for(Post post : accessoriesList){
-            categoryResponseDto.addAccessories(new PostResponseDto(post));
-        }
-        return ResponseEntity.ok(categoryResponseDto);
-    }
 
     public CateResponseDto showCate(String category) {
         CateResponseDto cateResponseDto = new CateResponseDto();

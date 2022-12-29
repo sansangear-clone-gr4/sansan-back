@@ -29,10 +29,11 @@ public class Bucket {
     @JoinColumn(name = "post_id")
     private Post post;
 
-    public Bucket(Long postId, BucketRequestDto bucketRequestDto, User user) {
+    public Bucket(Post post, BucketRequestDto bucketRequestDto, User user) {
         this.productNum = bucketRequestDto.getProductNum();
         this.size = bucketRequestDto.getSize();
         this.user = user;
+        this.post = post;
     }
 
     public void updateBucket(BucketRequestDto bucketRequestDto){

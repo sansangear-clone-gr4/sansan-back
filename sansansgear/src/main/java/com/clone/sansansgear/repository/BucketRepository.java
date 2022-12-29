@@ -8,6 +8,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface BucketRepository extends JpaRepository<Bucket, Long> {
-    List<Bucket> findByUserId(User user);
+    List<Bucket> findByUser(User user);
     Bucket findByIdAndUser(Long id, User user);
 }
