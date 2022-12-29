@@ -54,6 +54,7 @@ public class UserService {
         if (found.isPresent()) {
             throw new RestApiException(UserErrorCode.OVERLAPPED_USERID);
         }
+
         UserRoleEnum role = UserRoleEnum.USER;
         if (signupRequestDto.isAdmin()) {
             if (!signupRequestDto.getAdminToken().equals(ADMIN_TOKEN)) {
