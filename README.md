@@ -19,13 +19,13 @@
 
 ## 와이어프레임
 ![image](https://user-images.githubusercontent.com/55370369/209972737-b32457bd-6c3e-4a74-9ae8-b3583d615360.png)
-![Shop.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/bcfa32de-6d2a-4f36-9c5e-bfd2fc415528/Shop.png)
-![Detail.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/9e59b1b3-c7da-4e0c-aa3e-0c41d8dd6936/Detail.png)
-![Cart.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/cb098055-1294-4f31-8a30-f6044a3b91d9/Cart.png)
-![Post.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/4387d60f-e495-4e64-a211-173bb0205f74/Post.png)
-![Sign In.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/4df16aa8-a3c7-4882-b840-70c1ca6f8aec/Sign_In.png)
-![Sign Up.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/02acf0fd-ab8f-47bc-a602-b85486144960/Sign_Up.png)
-![FAQ.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/1d5f2d28-2d4f-4bbd-8627-bf667fd47e1b/FAQ.png)
+![image](https://user-images.githubusercontent.com/55370369/209972805-c5641536-c2cb-4c66-8145-3b264433fba1.png)
+![image](https://user-images.githubusercontent.com/55370369/209972829-5d95919d-b491-4c7f-bfe4-a6447826cbb1.png)
+![image](https://user-images.githubusercontent.com/55370369/209972851-653ddc86-149e-4224-93fe-0c6c05c2c235.png)
+![image](https://user-images.githubusercontent.com/55370369/209972872-64f984e4-d985-4593-9655-028ff7d8ea19.png)
+![image](https://user-images.githubusercontent.com/55370369/209972896-e77468fe-8562-40f3-a708-53b7b7d6c3ea.png)
+![image](https://user-images.githubusercontent.com/55370369/209972908-d600ed77-f4fa-4d6d-8226-d4103a41e745.png)
+![image](https://user-images.githubusercontent.com/55370369/209972930-32ac14c4-4088-4728-b9d0-6d66a16b929d.png)
 
 ## 🛠️Tech Stacks
 - Spring Boot
